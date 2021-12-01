@@ -3,4 +3,4 @@ project(adventofcode)
 
 set(CMAKE_CXX_STANDARD 23)
 
-add_executable(adventofcode main.cpp utils.h utils.cpp)
+add_executable(adventofcode main.cpp utils.h utils.cpp problems/Problem1.cpp problems/Problem1.h)

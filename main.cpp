@@ -9,6 +9,7 @@
 #include <vector>
 
 #include "utils.h"
+#include "problems/Problem1.h"
 
 
 int
@@ -23,11 +24,10 @@ main(int argc, char **argv)
 
     std::vector<std::string> input = read_lines(input_file);
 
-    for (const std::string& s : input)
-    {
-        std::cout << s << std::endl;
-    }
+    Problem1 problem = Problem1(input);
 
-    std::cout << "Hello, World!" << std::endl;
+    long solution = problem.calculateSolution();
+
+    std::cout << "The answer maaay be: " << solution << std::endl;
     return 0;
 }
