@@ -14,9 +14,20 @@ Problem1::Problem1(const vector<string> &inputs)
 }
 
 long Problem1::calculateSolution() {
+    vector<long> s;
+
+    int dataLength = inputs.size();
+    long *data = inputs.data();
+
+    for (int i = 0; i < dataLength - 2; i++)
+    {
+        s.push_back(data[i] + data[i + 1] + data[i + 2]);
+    }
+
+
     long previous = 3000; // blah whatever
     int count = 0;
-    for (long l : inputs)
+    for (long l : s)
     {
         if (l > previous)
         {
