@@ -17,23 +17,16 @@ long Problem1::calculate_solution() {
     long dataLength = things.size();
     long *data = things.data();
 
-    vector<long> windows;
-    windows.reserve(dataLength - 2);
-
+    int ret = 0;
+    long previous = 3000; // blah whatever
     for (int i = 0; i < dataLength - 2; i++)
     {
-        windows.push_back(data[i] + data[i + 1] + data[i + 2]);
-    }
-
-    long previous = 3000; // blah whatever
-    int ret = 0;
-    for (long w : windows)
-    {
-        if (w > previous)
+        long window = data[i] + data[i + 1] + data[i + 2];
+        if (window > previous)
         {
             ++ret;
         }
-        previous = w;
+        previous = window;
     }
     return ret;
 }
