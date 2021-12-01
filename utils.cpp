@@ -25,3 +25,14 @@ std::vector<std::string> read_lines(char * filename)
 
     return ret;
 }
+
+std::vector<long> strings_to_longs(std::vector<std::string> strings)
+{
+    std::vector<long> ret;
+    ret.reserve(strings.size());
+    for (const std::string& s : strings)
+    {
+        ret.push_back(atol(s.c_str()));
+    }
+    return ret;
+}

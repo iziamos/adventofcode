@@ -9,11 +9,11 @@ using namespace std;
 
 class Problem1 {
 public:
-    Problem1(const vector<string> &inputs);
-    long calculateSolution();
+    explicit Problem1(vector<string> inputs);
+    long calculate_solution();
 
 private:
-    vector<long> inputs;
+    vector<string> inputs;
 };
 
 

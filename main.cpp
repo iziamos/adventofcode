@@ -26,7 +26,7 @@ main(int argc, char **argv)
 
     Problem1 problem = Problem1(input);
 
-    long solution = problem.calculateSolution();
+    long solution = problem.calculate_solution();
 
     std::cout << "The answer maaay be: " << solution << std::endl;
     return 0;

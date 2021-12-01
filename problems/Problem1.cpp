@@ -4,37 +4,36 @@
 
 #include <vector>
 #include "Problem1.h"
+#include "../utils.h"
 
-Problem1::Problem1(const vector<string> &inputs)
+Problem1::Problem1(vector<string> inputs)
 {
-    for (string input : inputs)
-    {
-        this->inputs.push_back(atol(input.c_str()));
-    }
+    this->inputs = inputs;
 }
 
-long Problem1::calculateSolution() {
-    vector<long> s;
+long Problem1::calculate_solution() {
+    vector<long> things = strings_to_longs(inputs);
 
-    int dataLength = inputs.size();
-    long *data = inputs.data();
+    long dataLength = things.size();
+    long *data = things.data();
+
+    vector<long> windows;
+    windows.reserve(dataLength - 2);
 
     for (int i = 0; i < dataLength - 2; i++)
     {
-        s.push_back(data[i] + data[i + 1] + data[i + 2]);
+        windows.push_back(data[i] + data[i + 1] + data[i + 2]);
     }
-
 
     long previous = 3000; // blah whatever
-    int count = 0;
-    for (long l : s)
+    int ret = 0;
+    for (long w : windows)
     {
-        if (l > previous)
+        if (w > previous)
         {
-            ++count;
+            ++ret;
         }
-        previous = l;
+        previous = w;
     }
-
-    return count;
+    return ret;
 }
