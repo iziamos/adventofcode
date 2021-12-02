@@ -10,6 +10,7 @@
 
 #include "utils.h"
 #include "problems/Problem1.h"
+#include "problems/Problem2.h"
 
 
 int
@@ -24,7 +25,8 @@ main(int argc, char **argv)
 
     std::vector<std::string> input = read_lines(input_file);
 
-    Problem1 problem = Problem1(input);
+//    Problem1 problem = Problem1(input);
+    Problem2 problem = Problem2(input);
 
     long solution = problem.calculate_solution();
 
