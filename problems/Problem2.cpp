@@ -6,7 +6,7 @@
 #include <iostream>
 
 #include "Problem2.h"
-#include "../utils.h"
+
 Problem2::Problem2(vector<string> inputs) {
     this->inputs = inputs;
 }

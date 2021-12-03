@@ -8,7 +8,6 @@
 #include <string>
 using namespace std;
 
-
 class Problem2 {
 public:
     explicit Problem2(vector<string> inputs);
@@ -17,6 +16,5 @@ public:
 private:
     vector<string> inputs;
 };
-
 
 #endif //ADVENTOFCODE_PROBLEM2_H
