@@ -2,62 +2,103 @@
 // Created by John Ziamos on 03/12/2021.
 //
 
+#include <utility>
 #include <vector>
-#include <iostream>
-
 
 #include "Problem3.h"
 
 Problem3::Problem3(vector<string> inputs) {
-    this->inputs = inputs;
+    this->inputs = std::move(inputs);
 }
 
-long array_of_binary_to_long(int *in, int size)
+int most_common_bit_bias_1(vector<string> inputs, int i)
 {
-    long ret = 0;
-    for (int i = 0; i < size; ++i)
+    int g = 0;
+    int e = 0;
+    for (const string& s : inputs)
     {
-        ret += in[i] << (size - 1 - i);
+        if (s.c_str()[i] == '1')
+        {
+            g++;
+        }
+        else
+        {
+            e++;
+        }
     }
 
-    return ret;
+    return g < e ? 0 : 1;
 }
 
-long Problem3::calculate_solution() {
-
-
-    // gamma is when more 1, epsilon when more 0
-    const int length = inputs.front().length();
-    int *gt = (int *) calloc(length, sizeof(int));
-    int *et = (int *) calloc(length, sizeof(int));
-
-    const long input_size = inputs.size();
-
-    for (int i = 0; i < length; ++i)
+int most_common_bit_bias_0(const vector<string>& inputs, int i) //begging to be generalised but no time
+{
+    int g = 0;
+    int e = 0;
+    for (const string& s : inputs)
     {
-        int g = 0;
-        int e = 0;
-        for (const string& s : inputs)
+        if (s.c_str()[i] == '0')
         {
-            if (s.c_str()[i] == '1')
-            {
-                g++;
-            }
-            else
-            {
-                e++;
-            }
+            g++;
         }
-
-        gt[i] = g > e ? 1 : 0;
-        et[i] = g < e ? 1 : 0; // no bit shit cuz lazy
+        else
+        {
+            e++;
+        }
     }
 
-    const long gamma = array_of_binary_to_long(gt, length);
-    const long epsilon = array_of_binary_to_long(et, length);
+    return g > e ? 1 : 0;
+}
 
-    const long consumption = gamma * epsilon;
+string find_oxygen(vector<string> inputs, int pos)
+{
+    if (inputs.size() == 1)
+    {
+        return inputs.front();
+    }
 
-    return consumption;
+    const int i = most_common_bit_bias_1(inputs, pos);
+    vector<string> filtered;
+
+    for (const string& s : inputs)
+    {
+        if (s.c_str()[pos] == ('0' + i))
+        {
+            filtered.push_back(s);
+        }
+    }
+
+    return find_oxygen(filtered, pos + 1); // lol this will break if solution is duplicate
+}
+
+string find_dioxyde(vector<string> inputs, int pos)
+{
+    if (inputs.size() == 1)
+    {
+        return inputs.front();
+    }
+
+    const int i = most_common_bit_bias_0(inputs, pos); // this is the real only diff with method above
+    vector<string> filtered;
+
+    for (const string& s : inputs)
+    {
+        if (s.c_str()[pos] == ('0' + i))
+        {
+            filtered.push_back(s);
+        }
+    }
+
+    return find_dioxyde(filtered, pos + 1);
+}
+
+long Problem3::calculate_solution()
+{
+    string ox = find_oxygen(inputs, 0);
+    string diox = find_dioxyde(inputs, 0);
+
+    const long oxygen = std::stoi(ox, nullptr, 2);
+    const long cotwo = std::stoi(diox, nullptr, 2);
+
+    return oxygen * cotwo;
 }
 
