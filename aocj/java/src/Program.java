@@ -33,16 +33,27 @@ public class Program {
             boards.add(board);
         }
 
-        final Board f = boards.get(0);
-        System.out.println(f);
+        final List<Integer> calls = Arrays.stream(bingoCalls)
+            .mapToInt(Integer::parseInt)
+            .boxed()
+            .collect(toList());
 
-        f.markNumber(3);
-        System.out.println(f);
+        for (Integer call : calls) {
+            for (Board board : boards) {
+                board.markNumber(call);
+                if (board.isSolved())
+                {
+                    System.out.println(board.getScore() * call);
+                    return;
+                }
+            }
+        }
+
     }
 
     private static class Board
     {
-        private int [][] numbers = new int[5][];
+        private final int [][] numbers = new int[5][];
 
         void markNumber(int call)
         {
@@ -97,6 +108,22 @@ public class Program {
                 sb.append(System.lineSeparator());
             }
             return sb.toString();
+        }
+
+        public long getScore() {
+            long ret = 0L;
+
+            for (int [] line : numbers)
+            {
+                for (int n : line)
+                {
+                    if (n > -1)
+                    {
+                        ret += n;
+                    }
+                }
+            }
+            return ret;
         }
     }
 }
