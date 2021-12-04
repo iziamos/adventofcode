@@ -1,4 +1,5 @@
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -16,6 +17,44 @@ public class Program {
 
         final String[] bingoCalls = first.split(",");
 
-        System.out.println(Arrays.toString(bingoCalls));
+        final List<Board> boards = new ArrayList<>();
+
+        while(linesIterator.hasNext()) {
+            final String line = linesIterator.next();
+            assert line.isBlank();
+
+            final Board board = new Board();
+            for (int i = 0; i < 5; ++i)
+            {
+                board.numbers[i] = Arrays.stream(linesIterator.next().trim().split("\\s+"))
+                    .mapToInt(Integer::parseInt)
+                    .toArray();
+            }
+            boards.add(board);
+        }
+
+        for (Board b : boards ) {
+            System.out.println(b);
+        }
+    }
+
+    private static class Board {
+        private int [][] numbers = new int[5][];
+
+
+        @Override
+        public String toString() {
+            final StringBuffer sb = new StringBuffer();
+            for (int [] line : numbers)
+            {
+                for (int i : line)
+                {
+                    sb.append(i);
+                    sb.append(" ");
+                }
+                sb.append(System.lineSeparator());
+            }
+            return sb.toString();
+        }
     }
 }
