@@ -33,14 +33,28 @@ public class Program {
             boards.add(board);
         }
 
-        for (Board b : boards ) {
-            System.out.println(b);
-        }
+        final Board f = boards.get(0);
+        System.out.println(f);
+
+        f.markNumber(3);
+        System.out.println(f);
     }
 
     private static class Board {
         private int [][] numbers = new int[5][];
 
+        void markNumber(int call) {
+            for (int i = 0; i < numbers.length; ++i) {
+                final int[] line = numbers[i];
+                for (int j = 0; j < line.length; ++j)
+                {
+                    if(numbers[i][j] == call)
+                    {
+                        numbers[i][j] = -1;
+                    }
+                }
+            }
+        }
 
         @Override
         public String toString() {
