@@ -8,39 +8,27 @@ import static java.nio.file.Files.lines;
 import static java.nio.file.Paths.get;
 import static java.util.stream.Collectors.toList;
 
-public class Program {
-    public static void main (String... args) throws Exception {
+public class Program
+{
+    public static void main (String... args) throws Exception
+    {
         final List<String> lines = lines(get(args[0])).collect(toList());
-
         final var linesIterator = lines.iterator();
 
         final String first = linesIterator.next();
-
-        final String[] bingoCalls = first.split(",");
+        final int [] calls = Arrays.stream(first.split(","))
+            .mapToInt(Integer::parseInt)
+            .toArray();
 
         final List<Board> boards = new ArrayList<>();
-
         while(linesIterator.hasNext()) {
-            final String line = linesIterator.next();
-            assert line.isBlank();
+            linesIterator.next();// lets just say the inputs are clean
+            assert linesIterator.hasNext();
 
-            final Board board = new Board();
-            for (int i = 0; i < 5; ++i)
-            {
-                board.numbers[i] = Arrays.stream(linesIterator.next().trim().split("\\s+"))
-                    .mapToInt(Integer::parseInt)
-                    .toArray();
-            }
-            boards.add(board);
+            boards.add(Board.readBoard(linesIterator));
         }
 
-        final List<Integer> calls = Arrays.stream(bingoCalls)
-            .mapToInt(Integer::parseInt)
-            .boxed()
-            .collect(toList());
-
-        for (Integer call : calls) {
-
+        for (int call : calls) {
             final Iterator<Board> iterator = boards.iterator();
 
             while (iterator.hasNext())
@@ -54,12 +42,22 @@ public class Program {
                 }
             }
         }
-
     }
 
     private static class Board
     {
         private final int [][] numbers = new int[5][];
+
+        private static Board readBoard(Iterator<String> linesIterator) {
+            final Board ret = new Board();
+            for (int i = 0; i < 5; ++i)
+            {
+                ret.numbers[i] = Arrays.stream(linesIterator.next().trim().split("\\s+"))
+                    .mapToInt(Integer::parseInt)
+                    .toArray();
+            }
+            return ret;
+        }
 
         void markNumber(int call)
         {
@@ -103,7 +101,7 @@ public class Program {
         @Override
         public String toString()
         {
-            final StringBuffer sb = new StringBuffer();
+            final StringBuilder sb = new StringBuilder();
             for (int [] line : numbers)
             {
                 for (int i : line)
