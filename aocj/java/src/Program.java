@@ -40,10 +40,12 @@ public class Program {
         System.out.println(f);
     }
 
-    private static class Board {
+    private static class Board
+    {
         private int [][] numbers = new int[5][];
 
-        void markNumber(int call) {
+        void markNumber(int call)
+        {
             for (int i = 0; i < numbers.length; ++i) {
                 final int[] line = numbers[i];
                 for (int j = 0; j < line.length; ++j)
@@ -56,8 +58,34 @@ public class Program {
             }
         }
 
+        boolean isSolved()
+        {
+            for (int [] line : numbers)
+            {
+                if (Arrays.stream(line).sum() == -5)
+                {
+                    return true;
+                }
+            }
+
+            for (int r = 0; r < numbers[0].length; r++) // omg
+            {
+                int sum = 0;
+                for (int[] number : numbers) {
+                    sum += number[r];
+                }
+                if (sum == -5)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         @Override
-        public String toString() {
+        public String toString()
+        {
             final StringBuffer sb = new StringBuffer();
             for (int [] line : numbers)
             {
