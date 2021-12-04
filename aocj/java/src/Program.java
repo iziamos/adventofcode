@@ -1,6 +1,7 @@
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 
 import static java.nio.file.Files.lines;
@@ -39,12 +40,17 @@ public class Program {
             .collect(toList());
 
         for (Integer call : calls) {
-            for (Board board : boards) {
-                board.markNumber(call);
-                if (board.isSolved())
+
+            final Iterator<Board> iterator = boards.iterator();
+
+            while (iterator.hasNext())
+            {
+                final Board b = iterator.next();
+                b.markNumber(call);
+                if (b.isSolved())
                 {
-                    System.out.println(board.getScore() * call);
-                    return;
+                    iterator.remove();
+                    System.out.println(b.getScore() * call);
                 }
             }
         }
