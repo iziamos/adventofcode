@@ -8,7 +8,7 @@ import static java.nio.file.Files.lines;
 import static java.nio.file.Paths.get;
 import static java.util.stream.Collectors.toList;
 
-public class Program
+    public class Day4
 {
     public static void main (String... args) throws Exception
     {
